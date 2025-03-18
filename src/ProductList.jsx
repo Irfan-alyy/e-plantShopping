@@ -304,7 +304,7 @@ function ProductList({ onHomeClick }) {
                                     <h2 className='product-title'>{plant.name}</h2>
                                     <h4 className='product-price'>{plant.cost}</h4>
                                     <p>{plant.description}</p>
-                                    <button className='product-button' onClick={()=>addToCart(plant, plant.name)} disabled={addedToCart[plant.name]}>{addedToCart[plant.name]?"Added To Cart":"Add To Cart"}</button>
+                                    <button type='button' className='product-button' onClick={()=>addToCart(plant, plant.name)} disabled={addedToCart[plant.name]===true}>{addedToCart[plant.name]?"Added To Cart":"Add To Cart"}</button>
                                 </div>
                             ))}
                         </div>
