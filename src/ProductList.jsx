@@ -274,7 +274,7 @@ function ProductList({ onHomeClick }) {
             </div>
             {!showCart ? (
                 <div className="product-grid">
-
+                    <h1>Hrllo</h1>
 
                 </div>
             ) : (
