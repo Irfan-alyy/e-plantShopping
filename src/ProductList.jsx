@@ -1,10 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './ProductList.css'
 import CartItem from './CartItem';
+import { addItem, removeItem, updateQuantity } from './CartSlice';
+import { useDispatch, useSelector } from 'react-redux';
 function ProductList({ onHomeClick }) {
+    const dispatch=useDispatch()
+    const cart=useSelector(state=>state.cart.items)
+    console.log(cart)
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
-
+    const [addedToCart,setaddedToCart]=useState({})
     const plantsArray = [
         {
             category: "Air Purifying Plants",
@@ -252,6 +257,13 @@ function ProductList({ onHomeClick }) {
         e.preventDefault();
         setShowCart(false);
     };
+    const addToCart=(item, name)=>{
+        dispatch(addItem(item))
+        let obj= {...addedToCart}
+        obj[name]=true
+        setaddedToCart(obj)
+        console.log(addedToCart)
+    }
     return (
         <div>
             <div className="navbar" style={styleObj}>
@@ -274,7 +286,23 @@ function ProductList({ onHomeClick }) {
             </div>
             {!showCart ? (
                 <div className="product-grid">
-                    <h1>Hrllo</h1>
+                    {plantsArray.map(plants=>(
+                        <div>
+                        <h1>{plants.category}</h1>
+                        <div className='product-list'>
+                            {plants.plants.map(plant=>(
+                                <div className="product-card">
+                                    <img src={plant.image} alt={plant.name} className='product-image'/>
+                                    <h2 className='product-title'>{plant.name}</h2>
+                                    <h4 className='product-price'>{plant.cost}</h4>
+                                    <p>{plant.description}</p>
+                                    <button className='product-button' onClick={()=>addToCart(plant, plant.name)} disabled={addedToCart[plant.name]}>{addedToCart[plant.name]?"Added To Cart":"Add To Cart"}</button>
+                                </div>
+                            ))}
+                        </div>
+                        </div>
+                    ))}
+                    
 
                 </div>
             ) : (
